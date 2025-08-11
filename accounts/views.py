@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

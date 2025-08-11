@@ -5,4 +5,12 @@
   <h1>Bem-vindo(a) à Home!</h1>
   <p>Você está logado(a) com sucesso.</p>
 </div>
+
+<form action="{% url 'logout' %}" method="post" style="display: inline;">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">
+    Logout
+  </button>
+</form>
+
 {% endblock %}
