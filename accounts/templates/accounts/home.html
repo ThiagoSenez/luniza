@@ -356,128 +356,6 @@
             font-style: italic;
         }
 
-        /* Controles administrativos - ocultos por padrão */
-        .admin-controls {
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            display: none;
-            gap: 10px;
-            z-index: 20;
-        }
-
-        .admin-controls.show {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .admin-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            color: white;
-            margin-bottom: 5px;
-        }
-
-        .prev-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-        }
-
-        .prev-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.6);
-        }
-
-        .next-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-
-        .next-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
-        }
-
-        .reset-btn {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-        }
-
-        .reset-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.6);
-        }
-
-        /* Modal de login */
-        .login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-        }
-
-        .login-modal.show {
-            display: flex;
-        }
-
-        .login-form {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            width: 300px;
-        }
-
-        .login-form h3 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .login-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        .login-form button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        .login-form button:hover {
-            opacity: 0.9;
-        }
-
-        .login-form .cancel-btn {
-            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-        }
-
         /* Media query otimizada especificamente para iPhone 15 Plus (430x932) */
         @media (max-width: 430px) and (min-width: 414px) {
             .container {
@@ -521,17 +399,6 @@
             
             .progress-info {
                 font-size: 13px;
-            }
-
-            .admin-controls {
-                top: 75px;
-                right: 15px;
-            }
-
-            .admin-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
             }
         }
 
@@ -635,17 +502,6 @@
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-200 to-purple-300">
 
-    <!-- Modal de Login -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-form">
-            <h3>Acesso Administrativo</h3>
-            <input type="text" id="username" placeholder="Usuário" maxlength="20">
-            <input type="password" id="password" placeholder="Senha" maxlength="20">
-            <button onclick="attemptLogin()">Entrar</button>
-            <button class="cancel-btn" onclick="closeLoginModal()">Cancelar</button>
-        </div>
-    </div>
-
     <!-- Barra de progresso -->
     <div class="progress-container">
         <div class="progress-info">
@@ -658,24 +514,6 @@
         <div class="days-message" id="days-message">Sua jornada está começando!</div>
     </div>
 
-    <!-- Botão principal (sempre visível) -->
-    <button class="exit-btn" onclick="showLoginModal()" title="Acesso administrativo">
-        <i class="fas fa-cog"></i>
-    </button>
-
-    <!-- Controles administrativos (ocultos por padrão) -->
-    <div class="admin-controls" id="adminControls">
-        <button class="admin-btn prev-btn" onclick="previousDay()" title="Dia anterior">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="admin-btn next-btn" onclick="nextDay()" title="Próximo dia">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        <button class="admin-btn reset-btn" onclick="resetProgress()" title="Resetar para dia 1">
-            <i class="fas fa-redo"></i>
-        </button>
-    </div>
-
     <div class="container">
         <div class="envelope" id="envelope">
             <div class="envelope-body">
@@ -686,12 +524,20 @@
                 <div class="letter-paper">
                     <div class="letter-content">
                         <div class="letter-header">
-                            <div class="letter-date" id="letter-date">15 de Janeiro, 2025</div>
-                            <div class="letter-greeting" id="letter-greeting">Querido Amigo,</div>
+                            <div class="letter-date">15 de Janeiro, 2025</div>
+                            <div class="letter-greeting">Querido Amigo,</div>
                         </div>
                         
-                        <div class="letter-body" id="letter-body">
-                            <!-- Conteúdo será inserido dinamicamente -->
+                        <div class="letter-body">
+                            <p>Espero que esta carta te encontre bem e com o coração cheio de alegria. Queria compartilhar algumas reflexões sobre os momentos especiais que temos vivido juntos ao longo desta jornada.</p>
+                            
+                            <p>A vida nos reserva surpresas maravilhosas, e cada day é uma oportunidade única de criar memórias que levaremos para sempre em nossos corações. Às vezes paramos para contemplar como os pequenos gestos podem transformar completamente nossos dias.</p>
+                            
+                            <p>Tenho pensado muito sobre nossa amizade e como ela tem sido um presente valioso em minha vida. Os risos compartilhados, as conversas profundas que tivemos, e até mesmo os momentos de silêncio confortável - tudo isso contribui para fortalecer os laços que nos unem.</p>
+                            
+                            <p>Que possamos continuar cultivando nossa amizade com carinho, celebrando cada conquista juntos e apoiando um ao outro nos desafios que a vida nos apresentar. Você é uma pessoa muito especial e estou grato por tê-la em minha vida.</p>
+                            
+                            <p>Espero que esta mensagem traga um sorriso ao seu rosto e que saiba o quanto você é importante para mim.</p>
                         </div>
                         
                         <div class="signature">
@@ -705,99 +551,114 @@
     </div>
 
     <script>
-        // Base de dados com mensagens para cada dia
-        const dailyMessages = {
-            1: {
-                greeting: "Querido Amigo,",
-                content: [
-                    "Hoje começa uma jornada especial de 150 dias juntos! Estou muito animado para compartilhar pensamentos, reflexões e momentos especiais com você ao longo deste tempo.",
-                    "Esta primeira carta marca o início de algo único - uma conexão diária que nos permitirá crescer e nos conhecer melhor. Cada dia será uma nova oportunidade de troca e aprendizado.",
-                    "Que esta jornada seja repleta de descobertas, sorrisos e momentos marcantes. Estou aqui para caminhar ao seu lado nestes 150 dias que se iniciam hoje.",
-                    "Bem-vindo(a) à nossa aventura diária! Que possamos fazer de cada carta um pequeno presente para alegrar nossos dias."
-                ]
-            },
-            2: {
-                greeting: "Meu caro amigo,",
-                content: [
-                    "Segundo dia da nossa jornada! Ontem plantamos a semente de uma bela amizade, e hoje já posso sentir ela começando a brotar.",
-                    "Há algo mágico nos primeiros dias de uma nova amizade. Cada conversa revela um pouco mais sobre quem somos, nossas esperanças e sonhos.",
-                    "Espero que você esteja se sentindo tão entusiasmado quanto eu com esta troca diária. São os pequenos gestos que constroem as maiores conexões.",
-                    "Que este segundo dia traga ainda mais alegria e expectativa para os 148 dias que ainda temos pela frente!"
-                ]
-            },
-            3: {
-                greeting: "Querida pessoa especial,",
-                content: [
-                    "Terceiro dia e já sinto que nossa conexão está se fortalecendo! É incrível como a consistência pode criar laços tão significativos.",
-                    "Hoje quero falar sobre a importância da gratidão. Sou grato por ter você em minha vida e por podermos compartilhar estes momentos juntos.",
-                    "A vida nos ensina que as melhores amizades são aquelas que crescem dia após dia, com paciência e carinho mútuo.",
-                    "Espero que esta carta encontre você com um sorriso no rosto e o coração aberto para mais um dia de nossa jornada juntos."
-                ]
-            },
-            4: {
-                greeting: "Meu estimado companheiro,",
-                content: [
-                    "Quarto dia de nossa aventura! Hoje pensei muito sobre como os pequenos hábitos podem transformar nossa vida de formas incríveis.",
-                    "Escrever para você diariamente já se tornou um momento especial do meu dia. É como regar uma plantinha todos os dias e vê-la crescer.",
-                    "Há algo poético na repetição consciente e cheia de propósito. Cada carta é um tijolinho na construção de nossa amizade.",
-                    "Que possamos continuar cultivando esta bela tradição de nos conectarmos diariamente, independente de quão corridos sejam nossos dias."
-                ]
-            },
-            5: {
-                greeting: "Querido coração amigo,",
-                content: [
-                    "Cinco dias! Uma semana de trabalho completa se fosse em um emprego, mas aqui é só o começo de algo muito maior e mais significativo.",
-                    "Hoje quero celebrar os pequenos marcos. Cinco pode parecer pouco, mas já são cinco sementes de carinho plantadas entre nós.",
-                    "A constância é uma virtude rara nos dias de hoje. Que orgulho tenho de estarmos construindo algo sólido e duradouro juntos!",
-                    "Cada dia que passa, sinto mais certeza de que esta foi uma das melhores decisões que tomei. Obrigado por fazer parte desta jornada."
-                ]
-            },
-            6: {
-                greeting: "Meu querido amigo,",
-                content: [
-                    "Sexto dia e já posso dizer que você se tornou uma parte importante da minha rotina diária. Que coisa mais linda!",
-                    "Hoje refleti sobre como as amizades verdadeiras se formam: não é só nos grandes momentos, mas principalmente na constância dos pequenos gestos.",
-                    "Há uma magia especial em saber que, todos os dias, temos este momento de conexão reservado só para nós.",
-                    "Que este sexto dia seja repleto de alegrias e que você saiba o quanto sua presença em minha vida já faz diferença."
-                ]
-            },
-            7: {
-                greeting: "Pessoa especial,",
-                content: [
-                    "Uma semana inteira! Sete dias de cartas, sete dias de conexão, sete dias de uma amizade que cresce a cada palavra compartilhada.",
-                    "Completamos nossa primeira semana juntos e isso merece ser celebrado! São 143 dias pela frente, mas que bela fundação já criamos.",
-                    "O número sete sempre foi considerado especial em muitas culturas. Hoje ele marca algo especial também para nós.",
-                    "Que esta primeira semana completa seja o prenúncio de muitas outras semanas maravilhosas que virão em nossa jornada."
-                ]
-            },
-            8: {
-                greeting: "Meu caro companheiro de jornada,",
-                content: [
-                    "Oitavo dia! Entramos na nossa segunda semana com o coração cheio de expectativas e gratidão pelo caminho percorrido até aqui.",
-                    "Hoje pensei em como cada pessoa que entra em nossa vida deixa uma marca única. Você já deixou várias marcas positivas na minha.",
-                    "A amizade é como um jardim: precisa ser cuidada diariamente, regada com carinho e atenção. Obrigado por cuidar do nosso jardim comigo.",
-                    "Que este oitavo dia traga ainda mais motivos para celebrarmos esta linda conexão que estamos construindo juntos."
-                ]
-            },
-            9: {
-                greeting: "Querido amigo do coração,",
-                content: [
-                    "Nono dia de nossa jornada! Há algo mágico no número nove - representa quase a conclusão de um ciclo, mas ainda com espaço para crescer.",
-                    "Hoje quero falar sobre a importância de termos alguém especial com quem compartilhar os pequenos momentos do dia a dia.",
-                    "Nove dias podem não parecer muito tempo, mas já construímos uma tradição linda e significativa que levarei para sempre comigo.",
-                    "Espero que você esteja sentindo a mesma alegria que eu sinto a cada carta que escrevo. Sua presença ilumina meus dias."
-                ]
-            },
-            10: {
-                greeting: "Meu estimado amigo,",
-                content: [
-                    "Chegamos ao décimo dia! Dois dígitos! É um marco especial que merece ser celebrado com muito carinho e gratidão.",
-                    "Dez dias de cartas, dez dias de amizade crescendo, dez dias de momentos especiais compartilhados. Que jornada incrível estamos vivendo!",
-                    "Há uma solidez nos números redondos que me enche de alegria. Dez dias representam o início de uma tradição que durará muito tempo.",
-                    "Obrigado por tornar cada um destes dez dias especiais. Que os próximos 140 sejam ainda mais maravilhosos que estes primeiros."
-                ]
-            },
-            11: {
-                greeting: "Pessoa querida,",
-                content: [
-                    "Décimo primeiro dia! Saímos dos números redondos, mas a magia continua cresc
+        // JavaScript para controlar a interatividade do envelope
+        const envelope = document.getElementById('envelope');
+        let isOpen = false;
+
+        envelope.addEventListener('click', function() {
+            if (isOpen) {
+                envelope.classList.remove('open');
+                isOpen = false;
+            } else {
+                envelope.classList.add('open');
+                isOpen = true;
+            }
+        });
+
+        envelope.addEventListener('mouseenter', function() {
+            if (!isOpen) {
+                this.style.transform = 'scale(1.02) translateY(-2px)';
+            }
+        });
+
+        envelope.addEventListener('mouseleave', function() {
+            if (!isOpen) {
+                this.style.transform = 'scale(1) translateY(0)';
+            }
+        });
+
+        // Previne zoom indesejado no mobile
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // CÓDIGO PARA A BARRA DE PROGRESSO
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se já temos um dia salvo no localStorage
+            let currentDay = localStorage.getItem('currentDay');
+            
+            // Se não tiver, começa do dia 1
+            if (!currentDay) {
+                currentDay = 1;
+            } else {
+                currentDay = parseInt(currentDay);
+                
+                // Verifica se já passou um dia desde a última visita
+                const lastVisit = localStorage.getItem('lastVisit');
+                const today = new Date().toDateString();
+                
+                if (lastVisit !== today && currentDay < 150) {
+                    currentDay++;
+                    localStorage.setItem('lastVisit', today);
+                }
+            }
+            
+            // Atualiza a exibição
+            updateProgress(currentDay);
+            
+            // Salva o dia atual
+            localStorage.setItem('currentDay', currentDay);
+            if (!localStorage.getItem('lastVisit')) {
+                localStorage.setItem('lastVisit', new Date().toDateString());
+            }
+        });
+        
+        function updateProgress(day) {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            const messageElement = document.getElementById('days-message');
+            
+            // Calcula a porcentagem do progresso
+            const percentage = (day / 150) * 100;
+            
+            // Atualiza a barra de progresso
+            progressFill.style.width = `${percentage}%`;
+            
+            // Atualiza o texto
+            progressText.textContent = `${day}/150`;
+            
+            // Atualiza a mensagem motivacional baseada no progresso
+            if (day === 1) {
+                messageElement.textContent = "Sua jornada está apenas começando. Continue assim!";
+            } else if (day < 10) {
+                messageElement.textContent = "Você está no começo de uma linda jornada. Persista!";
+            } else if (day < 30) {
+                messageElement.textContent = "Já estamos fazendo progresso! Mantenha o foco.";
+            } else if (day < 50) {
+                messageElement.textContent = "Incrível! Você já percorreu um bom caminho.";
+            } else if (day < 75) {
+                messageElement.textContent = "Metade do caminho já foi percorrida! Você é incrível!";
+            } else if (day < 100) {
+                messageElement.textContent = "Estamos na reta final! Que determinação!";
+            } else if (day < 125) {
+                messageElement.textContent = "Uau! Faltam poucos dias para completar sua jornada!";
+            } else if (day < 150) {
+                messageElement.textContent = "Quase lá! Últimos passos dessa incrível jornada!";
+            } else if (day === 150) {
+                messageElement.textContent = "Parabéns! Você completou sua jornada de 150 dias!";
+            }
+        }
+    </script>
+</body>
+</html>
