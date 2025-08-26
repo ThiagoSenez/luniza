@@ -6,11 +6,11 @@
     <title>Carta Vintage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;600&family=Great+Vibes:wght@400&family=Allura:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Playfair Display', serif;
             min-height: 100vh;
-
             overflow: hidden;
         }
 
@@ -144,7 +144,6 @@
             );
         }
 
-        /* Carta completamente reformulada */
         .letter-paper {
             position: absolute;
             top: 50%;
@@ -163,9 +162,11 @@
             box-sizing: border-box;
         }
 
+        /* Aumentado z-index da carta quando aberta para ficar acima da barra de progresso */
         .envelope.open .letter-paper {
             transform: translate(-50%, -50%) translateY(-60px) scale(1);
             opacity: 1;
+            z-index: 100; /* Muito maior que a barra de progresso (z-index: 20) */
         }
 
         .letter-content {
@@ -261,17 +262,115 @@
             opacity: 0.7;
         }
 
-        /* Otimização para iPhone 15 Plus (430px de largura) */
-        @media (max-width: 430px) and (min-width: 390px) {
+        /* ESTILOS DA BARRA DE PROGRESSO */
+        .progress-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 300px;
+            z-index: 20; /* Mantido abaixo da carta quando aberta */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b21a8;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #f3e8ff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.5s ease-in-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, 
+                            transparent 50%, rgba(255, 255, 255, 0.2) 50%, 
+                            rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            border-radius: 10px;
+            animation: move 1s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        .exit-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff9cee 0%, #ff5ebb 100%);
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(255, 94, 187, 0.4);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20; /* Mantido abaixo da carta quando aberta */
+        }
+
+        .exit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(255, 94, 187, 0.6);
+        }
+
+        .days-message {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #7e22ce;
+            font-style: italic;
+        }
+
+        /* Media query otimizada especificamente para iPhone 15 Plus (430x932) */
+        @media (max-width: 430px) and (min-width: 414px) {
+            .container {
+                padding: 15px;
+            }
+            
             .envelope {
-                width: 280px;
-                height: 175px;
+                width: 290px;
+                height: 180px;
             }
             
             .letter-paper {
-                width: 260px;
-                height: 380px;
-                padding: 30px 25px;
+                width: 270px;
+                height: 390px;
+                padding: 32px 28px;
             }
 
             .letter-greeting {
@@ -283,15 +382,62 @@
             }
 
             .signature {
+                font-size: 22px;
+            }
+
+            /* Ajustado posicionamento da carta para melhor centralização no iPhone 15 Plus */
+            .envelope.open .letter-paper {
+                transform: translate(-50%, -50%) translateY(-50px) scale(1);
+            }
+
+            .progress-container {
+                width: 85%;
+                max-width: 320px;
+                padding: 11px 14px;
+                top: 15px;
+            }
+            
+            .progress-info {
+                font-size: 13px;
+            }
+        }
+
+        /* Media query para iPhone 14 Pro e similares */
+        @media (max-width: 413px) and (min-width: 390px) {
+            .envelope {
+                width: 275px;
+                height: 170px;
+            }
+            
+            .letter-paper {
+                width: 255px;
+                height: 370px;
+                padding: 28px 24px;
+            }
+
+            .letter-greeting {
+                font-size: 16px;
+            }
+
+            .letter-body {
+                font-size: 13px;
+            }
+
+            .signature {
                 font-size: 21px;
             }
 
             .envelope.open .letter-paper {
-                transform: translate(-50%, -50%) translateY(-70px) scale(1);
+                transform: translate(-50%, -50%) translateY(-60px) scale(1);
+            }
+
+            .progress-container {
+                width: 88%;
+                padding: 10px 12px;
             }
         }
 
-        /* Para telas menores que iPhone 15 Plus */
+        /* Media query para telas menores */
         @media (max-width: 389px) {
             .envelope {
                 width: 260px;
@@ -319,10 +465,54 @@
             .envelope.open .letter-paper {
                 transform: translate(-50%, -50%) translateY(-80px) scale(1);
             }
+
+            .progress-container {
+                width: 90%;
+                padding: 8px 10px;
+            }
+            
+            .progress-info {
+                font-size: 12px;
+            }
+        }
+
+        /* Adicionado media query para telas muito grandes para garantir boa visualização */
+        @media (min-width: 768px) {
+            .envelope {
+                width: 320px;
+                height: 200px;
+            }
+            
+            .letter-paper {
+                width: 300px;
+                height: 420px;
+                padding: 40px 35px;
+            }
+
+            .envelope.open .letter-paper {
+                transform: translate(-50%, -50%) translateY(-40px) scale(1);
+            }
+
+            .progress-container {
+                width: 60%;
+                max-width: 400px;
+            }
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-200 to-purple-300">
+
+    <!-- Barra de progresso -->
+    <div class="progress-container">
+        <div class="progress-info">
+            <span>Minha Jornada</span>
+            <span id="progress-text">0/150</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="days-message" id="days-message">Sua jornada está começando!</div>
+    </div>
 
     <div class="container">
         <div class="envelope" id="envelope">
@@ -341,7 +531,7 @@
                         <div class="letter-body">
                             <p>Espero que esta carta te encontre bem e com o coração cheio de alegria. Queria compartilhar algumas reflexões sobre os momentos especiais que temos vivido juntos ao longo desta jornada.</p>
                             
-                            <p>A vida nos reserva surpresas maravilhosas, e cada dia é uma oportunidade única de criar memórias que levaremos para sempre em nossos corações. Às vezes paramos para contemplar como os pequenos gestos podem transformar completamente nossos dias.</p>
+                            <p>A vida nos reserva surpresas maravilhosas, e cada day é uma oportunidade única de criar memórias que levaremos para sempre em nossos corações. Às vezes paramos para contemplar como os pequenos gestos podem transformar completamente nossos dias.</p>
                             
                             <p>Tenho pensado muito sobre nossa amizade e como ela tem sido um presente valioso em minha vida. Os risos compartilhados, as conversas profundas que tivemos, e até mesmo os momentos de silêncio confortável - tudo isso contribui para fortalecer os laços que nos unem.</p>
                             
@@ -361,6 +551,7 @@
     </div>
 
     <script>
+        // JavaScript para controlar a interatividade do envelope
         const envelope = document.getElementById('envelope');
         let isOpen = false;
 
@@ -401,6 +592,73 @@
             }
             lastTouchEnd = now;
         }, false);
+
+        // CÓDIGO PARA A BARRA DE PROGRESSO
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se já temos um dia salvo no localStorage
+            let currentDay = localStorage.getItem('currentDay');
+            
+            // Se não tiver, começa do dia 1
+            if (!currentDay) {
+                currentDay = 1;
+            } else {
+                currentDay = parseInt(currentDay);
+                
+                // Verifica se já passou um dia desde a última visita
+                const lastVisit = localStorage.getItem('lastVisit');
+                const today = new Date().toDateString();
+                
+                if (lastVisit !== today && currentDay < 150) {
+                    currentDay++;
+                    localStorage.setItem('lastVisit', today);
+                }
+            }
+            
+            // Atualiza a exibição
+            updateProgress(currentDay);
+            
+            // Salva o dia atual
+            localStorage.setItem('currentDay', currentDay);
+            if (!localStorage.getItem('lastVisit')) {
+                localStorage.setItem('lastVisit', new Date().toDateString());
+            }
+        });
+        
+        function updateProgress(day) {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            const messageElement = document.getElementById('days-message');
+            
+            // Calcula a porcentagem do progresso
+            const percentage = (day / 150) * 100;
+            
+            // Atualiza a barra de progresso
+            progressFill.style.width = `${percentage}%`;
+            
+            // Atualiza o texto
+            progressText.textContent = `${day}/150`;
+            
+            // Atualiza a mensagem motivacional baseada no progresso
+            if (day === 1) {
+                messageElement.textContent = "Sua jornada está apenas começando. Continue assim!";
+            } else if (day < 10) {
+                messageElement.textContent = "Você está no começo de uma linda jornada. Persista!";
+            } else if (day < 30) {
+                messageElement.textContent = "Já estamos fazendo progresso! Mantenha o foco.";
+            } else if (day < 50) {
+                messageElement.textContent = "Incrível! Você já percorreu um bom caminho.";
+            } else if (day < 75) {
+                messageElement.textContent = "Metade do caminho já foi percorrida! Você é incrível!";
+            } else if (day < 100) {
+                messageElement.textContent = "Estamos na reta final! Que determinação!";
+            } else if (day < 125) {
+                messageElement.textContent = "Uau! Faltam poucos dias para completar sua jornada!";
+            } else if (day < 150) {
+                messageElement.textContent = "Quase lá! Últimos passos dessa incrível jornada!";
+            } else if (day === 150) {
+                messageElement.textContent = "Parabéns! Você completou sua jornada de 150 dias!";
+            }
+        }
     </script>
 </body>
 </html>
